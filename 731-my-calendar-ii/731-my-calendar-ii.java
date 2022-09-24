@@ -1,5 +1,6 @@
 class MyCalendarTwo {
     private final List<Event> events = new ArrayList<>();
+    private final List<Event> doubleBooked = new ArrayList<>();
 
     public MyCalendarTwo() {
     }
@@ -16,20 +17,18 @@ class MyCalendarTwo {
     
     private boolean tripleBooking(Event newEvent) {
         List<Event> clashes = new ArrayList<>();
+        for (var event : doubleBooked) {
+            if (overlaps(event, newEvent)) {
+                return true;
+            }
+        }
         for (var event : events) {
             if (overlaps(event, newEvent)) {
                 var clashInterval = new Event(
                     Math.max(event.start(), newEvent.start()),
                     Math.min(event.end(), newEvent.end())
                 );
-                clashes.add(clashInterval);
-            }
-        }
-        for (int i = 0; i < clashes.size(); ++i) {
-            for (int j = i + 1; j < clashes.size(); ++j) {
-                if (overlaps(clashes.get(i), clashes.get(j))) {
-                    return true;
-                }
+                doubleBooked.add(clashInterval);
             }
         }
         return false;
