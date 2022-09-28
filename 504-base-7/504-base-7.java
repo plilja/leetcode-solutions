@@ -2,20 +2,19 @@ class Solution {
     public String convertToBase7(int num) {
         if (num < 0) {
             return "-" + convertToBase7(-num);
-        } else {
-            int b = 1;
-            while (b * 7 <= num) {
-                b *= 7;
-            }
+        } if (num == 0) {
+            return "0";
+        }else {
             StringBuilder result = new StringBuilder();
             int rem = num;
-            while (b >= 1) {
-                int d = rem / b;
+            while (rem > 0) {
+                int d = rem % 7;
                 result.append(d);
-                rem -= d * b;
-                b /= 7;
+                rem /= 7;
             }
+            result.reverse();
             return result.toString();
         }
+        
     }
 }
