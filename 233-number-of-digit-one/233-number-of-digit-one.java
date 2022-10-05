@@ -1,5 +1,5 @@
 class Solution {
-    private static final int DIV = 10000;
+    private static final int DIV = 1000;
     
     public int countDigitOne(int n) {
         int k = 0;
