@@ -9,24 +9,21 @@ class Solution {
             engineers.add(new Engineer(speeds[i], efficiencies[i]));
         }
         engineers.sort((a, b) -> (int) (a.efficiency - b.efficiency));
-        BigInteger result = BigInteger.valueOf(0);
+        long result = 0;
         PriorityQueue<Long> pq = new PriorityQueue<>();
-        BigInteger runningSum = BigInteger.ZERO;
+        long runningSum = 0;
         for (int i = n - 1; i >= 0; --i) {
-            var engineer = engineers.get(i);
+            Engineer engineer = engineers.get(i);
             pq.add(engineer.speed);
-            runningSum = runningSum.add(BigInteger.valueOf(engineer.speed));
+            runningSum += engineer.speed;
             while (pq.size() > k) {
                 long speed = pq.poll();
-                runningSum = runningSum.subtract(BigInteger.valueOf(speed));
+                runningSum -= speed;
             }
-            BigInteger minEfficiency = BigInteger.valueOf(engineer.efficiency);
-            BigInteger current = runningSum.multiply(minEfficiency);
-            if (result.compareTo(current) < 0) {
-                result = current;
-            }
+            long current = runningSum * engineer.efficiency;
+            result = Math.max(result, current);
         }
-        return result.mod(BigInteger.valueOf(MOD)).intValue();
+        return (int) (result % MOD);
     }
 
     private record Engineer(long speed, long efficiency) {
