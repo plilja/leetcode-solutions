@@ -3,19 +3,16 @@ private val MOD = 1000000007
 class Solution {
     fun numSubseq(nums: IntArray, target: Int): Int {
         nums.sort()
-        var left = nums.size - 1;
+        var right = nums.size - 1;
         var result = 0L
-        for ((right, rightValue) in nums.withIndex()) {
-            while (left >= 0 && rightValue + nums[left] > target) {
-                left--
+        for ((left, leftValue) in nums.withIndex()) {
+            while (right >= left && leftValue + nums[right] > target) {
+                right--
             }
-            if (left >= right) {
-                result += pow(2L, right.toLong())
-            } else if (left >= 0) {
-                val leftPicks = pow(2L, left.toLong() + 1L) - 1
-                val midPicks = pow(2L, (right - left - 1).toLong())
-                result += leftPicks * midPicks
-            } 
+            if (right < left) {
+                break
+            }
+            result += pow(2L, (right - left).toLong())
             result %= MOD
         }
         return result.toInt()
