@@ -20,10 +20,10 @@ class Solution {
             if (results[p.y][p.x] <= p.elevation) {
                 continue;
             }
+            results[p.y][p.x] = p.elevation;
             if (p.x == grid[0].length - 1 && p.y == grid.length - 1) {
                 return p.elevation;
             }
-            results[p.y][p.x] = p.elevation;
             for (Point d : DELTAS) {
                 int x2 = p.x + d.x;
                 int y2 = p.y + d.y;
