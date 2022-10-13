@@ -15,10 +15,13 @@ class Solution {
             return a.elevation - b.elevation;
         });
         pq.add(new Point(0, 0, grid[0][0]));
-        while (!pq.isEmpty()) {
+        while (true) {
             Point p = pq.poll();
             if (results[p.y][p.x] <= p.elevation) {
                 continue;
+            }
+            if (p.x == grid[0].length - 1 && p.y == grid.length - 1) {
+                return p.elevation;
             }
             results[p.y][p.x] = p.elevation;
             for (Point d : DELTAS) {
@@ -35,7 +38,6 @@ class Solution {
                 pq.add(n);
             }
         }
-        return results[grid.length - 1][grid[0].length - 1];
     }
     
     private record Point(int x, int y, int elevation) {
