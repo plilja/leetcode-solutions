@@ -1,20 +1,22 @@
 class Solution {
     public boolean canReach(String s, int minJump, int maxJump) {
-        TreeSet<Integer> reachable = new TreeSet<>();
-        reachable.add(0);
-        for (int i = 0; i < s.length(); ++i) {
+        boolean[] reachable = new boolean[s.length()];
+        int left = 0;
+        reachable[0] = true;
+        for (int i = minJump; i < s.length(); ++i) {
             char c = s.charAt(i);
             if (c == '0') {
-                var right = reachable.floor(i - minJump);
-                if (right != null && i <= right + maxJump) {
-                    reachable.add(i);
+                while (left + maxJump < i) {
+                    left++;
+                    while (left < s.length() && !reachable[left]) {
+                        left++;
+                    }
                 }
-                var left = reachable.ceiling(i - maxJump);
-                if (left != null && left + minJump <= i) {
-                    reachable.add(i);
+                if (left + minJump <= i && left + maxJump >= i) {
+                    reachable[i] = true;
                 }
             }
         }
-        return reachable.contains(s.length() - 1);
+        return reachable[s.length() - 1];
     }
 }
