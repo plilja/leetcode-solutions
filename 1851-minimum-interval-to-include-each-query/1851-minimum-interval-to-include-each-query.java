@@ -10,16 +10,17 @@ class Solution {
             sortedQueries.add(new IndexAndValue(i, q));
         }
         sortedQueries.sort(Comparator.comparingInt(a -> a.value));
-        var unusedIntervals = new PriorityQueue<Integer[]>((a, b) -> {
+        var sortedIntervals = new ArrayList<Integer[]>();
+        for (int[] interval : intervals) {
+            sortedIntervals.add(new Integer[]{interval[0], interval[1]});
+        }
+        sortedIntervals.sort((a, b) -> {
             if (a[0] != b[0]) {
                 return a[0] - b[0];
             } else {
                 return a[1] - b[1];
             }
         });
-        for (int[] interval : intervals) {
-            unusedIntervals.add(new Integer[]{interval[0], interval[1]});
-        }
         var minimumInterval = new PriorityQueue<Integer[]>((a, b) -> {
             int aSize = a[1] - a[0];
             int bSize = b[1] - b[0];
@@ -30,9 +31,11 @@ class Solution {
             }
         });
         int[] result = new int[queries.length];
+        int nextInterval = 0;
         for (var item : sortedQueries) {
-            while (!unusedIntervals.isEmpty() && unusedIntervals.peek()[0] <= item.value) {
-                Integer[] interval = unusedIntervals.poll();
+            while (nextInterval < sortedIntervals.size() && sortedIntervals.get(nextInterval)[0] <= item.value) {
+                Integer[] interval = sortedIntervals.get(nextInterval);
+                nextInterval++;
                 minimumInterval.add(interval);
             }
             while (!minimumInterval.isEmpty() && minimumInterval.peek()[1] < item.value) {
