@@ -23,8 +23,6 @@ class Solution {
                 prefixMult.add(prefixMult.get(prefixMult.size() - 1).multiply(BigInteger.valueOf(p)));
             }
         }
-        System.out.println(powers);
-        System.out.println(prefixMult);
         int[] result = new int[queries.length];
         for (int i = 0; i < queries.length; ++i) {
             int[] query = queries[i];
