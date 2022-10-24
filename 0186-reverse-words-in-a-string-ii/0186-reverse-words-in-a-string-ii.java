@@ -16,15 +16,8 @@
 */
 class Solution {
     public void reverseWords(char[] s) {
+        reverseBetween(s, 0, s.length - 1);
         int left = 0;
-        for (int i = 0; i < s.length; ++i) {
-            if (s[i] == ' ') {
-                swapBetween(s, left, i);
-                left = i + 1;
-            }
-        }
-        swapBetween(s, left, s.length - 1);
-        left = 0;
         for (int i = 0; i < s.length; ++i) {
             if (s[i] == ' ') {
                 reverseBetween(s, left, i - 1);
@@ -32,14 +25,6 @@ class Solution {
             }
         }
         reverseBetween(s, left, s.length - 1);
-    }
-    
-    private void swapBetween(char[] s, int start, int end) {
-        for (int j = start; j <= end; ++j) {
-            if (j < s.length - j - 1) {
-                swap(s, j, s.length - j - 1);
-            }
-        }
     }
     
     private void reverseBetween(char[] s, int start, int end) {
