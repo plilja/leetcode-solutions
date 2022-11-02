@@ -20,7 +20,6 @@ class Solution {
             if (suffixSums.containsKey(rem)) {
                 int subsolution = i + 1 + suffixSums.get(rem);
                 result = Math.min(result, subsolution);
-                System.out.println(i);
             }
         }
         if (result == Integer.MAX_VALUE) {
